@@ -31,7 +31,14 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+| Principle | Gate | Status |
+|-----------|------|--------|
+| I. Code Quality | Pure functions for rules/validation; type hints on all public APIs | ⬜ |
+| II. Architecture | LLM outputs validated via Pydantic/Zod; safety validation before persist/display | ⬜ |
+| III. Security | Input validation at boundaries; no secrets in code; auth on user endpoints | ⬜ |
+| IV. Testing | Unit tests for validators; contract tests for planner graph | ⬜ |
+| V. Style | ruff/black (Python) or eslint/prettier (TS); files <300 lines | ⬜ |
+| VI. Change | Docs updated if behavior changes; no unrelated refactors | ⬜ |
 
 ## Project Structure
 
