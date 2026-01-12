@@ -1,0 +1,895 @@
+openapi: 3.1.0
+info:
+  title: Baby Meal Planner API
+  version: 1.0.0
+  description: REST API for infant meal planning with AI-powered generation
+
+servers:
+  - url: http://localhost:8000
+    description: Development
+  - url: https://api.babymealplanner.com
+    description: Production
+
+tags:
+  - name: auth
+    description: Authentication endpoints (fastapi-users)
+  - name: profile
+    description: Baby profile management
+  - name: plans
+    description: Meal plan generation and management
+  - name: logs
+    description: Meal and reaction logging
+  - name: data
+    description: Reference data (recipes, foods)
+
+paths:
+  # ============ AUTH (fastapi-users standard) ============
+  /auth/register:
+    post:
+      tags: [auth]
+      summary: Register new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRead'
+        '400':
+          description: Validation error
+
+  /auth/jwt/login:
+    post:
+      tags: [auth]
+      summary: Login with email/password
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required: [username, password]
+      responses:
+        '200':
+          description: Login successful
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BearerResponse'
+        '400':
+          description: Invalid credentials
+
+  /auth/jwt/logout:
+    post:
+      tags: [auth]
+      summary: Logout current user
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Logged out
+
+  /auth/forgot-password:
+    post:
+      tags: [auth]
+      summary: Request password reset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+              required: [email]
+      responses:
+        '202':
+          description: Reset email sent (if user exists)
+
+  /auth/reset-password:
+    post:
+      tags: [auth]
+      summary: Reset password with token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                password:
+                  type: string
+                  minLength: 8
+              required: [token, password]
+      responses:
+        '200':
+          description: Password reset successful
+
+  # ============ USER ============
+  /users/me:
+    get:
+      tags: [auth]
+      summary: Get current user
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRead'
+        '401':
+          description: Not authenticated
+
+  # ============ BABY PROFILE ============
+  /baby-profile:
+    get:
+      tags: [profile]
+      summary: Get baby profile for current user
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BabyProfileRead'
+        '404':
+          description: No profile exists
+
+    post:
+      tags: [profile]
+      summary: Create baby profile
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BabyProfileCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BabyProfileRead'
+        '400':
+          description: Profile already exists or validation error
+
+    put:
+      tags: [profile]
+      summary: Update baby profile
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BabyProfileUpdate'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BabyProfileRead'
+        '404':
+          description: Profile not found
+
+    delete:
+      tags: [profile]
+      summary: Delete baby profile and all associated data
+      security:
+        - cookieAuth: []
+      responses:
+        '204':
+          description: Profile deleted
+        '404':
+          description: Profile not found
+
+  # ============ MEAL PLANS ============
+  /plans:
+    get:
+      tags: [plans]
+      summary: List meal plans
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MealPlanSummary'
+                  total:
+                    type: integer
+
+  /plans/generate:
+    post:
+      tags: [plans]
+      summary: Generate new meal plan (async, may take up to 30s)
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanGenerateRequest'
+      responses:
+        '201':
+          description: Plan generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MealPlanRead'
+        '422':
+          description: Generation failed after retries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationError'
+        '400':
+          description: Validation error
+
+  /plans/{plan_id}:
+    get:
+      tags: [plans]
+      summary: Get meal plan by ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: plan_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MealPlanRead'
+        '404':
+          description: Plan not found
+
+  /plans/{plan_id}/swap:
+    post:
+      tags: [plans]
+      summary: Swap a meal in the plan
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: plan_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MealSwapRequest'
+      responses:
+        '200':
+          description: Meal swapped, shopping list updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MealPlanRead'
+        '400':
+          description: Invalid swap (safety violation)
+
+  # ============ MEAL LOGS ============
+  /logs/meal:
+    post:
+      tags: [logs]
+      summary: Log meal outcome
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MealLogCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MealLogRead'
+
+    get:
+      tags: [logs]
+      summary: Get meal logs
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: start_date
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MealLogRead'
+
+  # ============ REACTION LOGS ============
+  /logs/reaction:
+    post:
+      tags: [logs]
+      summary: Log reaction
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReactionLogCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReactionLogRead'
+
+    get:
+      tags: [logs]
+      summary: Get reaction logs
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReactionLogRead'
+
+  # ============ REFERENCE DATA ============
+  /recipes:
+    get:
+      tags: [data]
+      summary: List available recipes (for manual swap selection)
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: texture_level
+          in: query
+          schema:
+            type: string
+            enum: [puree, soft_mash, finger_food, mixed]
+        - name: meal_slot
+          in: query
+          schema:
+            type: string
+            enum: [breakfast, lunch, dinner, snack]
+        - name: is_vegetarian
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecipeSummary'
+
+  /foods/introduced:
+    get:
+      tags: [data]
+      summary: Get introduced foods with stats
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+            enum: [name, date_introduced, preference_ratio]
+            default: date_introduced
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IntroducedFood'
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: fastapiusersauth
+
+  schemas:
+    # ============ AUTH ============
+    UserCreate:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+      required: [email, password]
+
+    UserRead:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        is_active:
+          type: boolean
+        is_verified:
+          type: boolean
+
+    BearerResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          enum: [bearer]
+
+    # ============ BABY PROFILE ============
+    BabyProfileCreate:
+      type: object
+      properties:
+        nickname:
+          type: string
+          maxLength: 100
+        date_of_birth:
+          type: string
+          format: date
+        feeding_style:
+          type: string
+          enum: [puree, blw, mixed]
+        meals_per_day:
+          type: integer
+          minimum: 1
+          maximum: 3
+        dietary_preference:
+          type: string
+          enum: [vegetarian, omnivore]
+          default: omnivore
+        cuisine_preferences:
+          type: array
+          items:
+            type: string
+        allergens:
+          type: array
+          items:
+            type: string
+        avoid_list:
+          type: array
+          items:
+            type: string
+        max_prep_minutes:
+          type: integer
+          default: 30
+        batch_cook_days:
+          type: array
+          items:
+            type: string
+            enum: [monday, tuesday, wednesday, thursday, friday, saturday, sunday]
+        pantry_staples:
+          type: array
+          items:
+            type: string
+      required: [nickname, date_of_birth, feeding_style, meals_per_day]
+
+    BabyProfileUpdate:
+      type: object
+      properties:
+        nickname:
+          type: string
+        feeding_style:
+          type: string
+          enum: [puree, blw, mixed]
+        meals_per_day:
+          type: integer
+          minimum: 1
+          maximum: 3
+        dietary_preference:
+          type: string
+          enum: [vegetarian, omnivore]
+        cuisine_preferences:
+          type: array
+          items:
+            type: string
+        allergens:
+          type: array
+          items:
+            type: string
+        avoid_list:
+          type: array
+          items:
+            type: string
+        max_prep_minutes:
+          type: integer
+        batch_cook_days:
+          type: array
+          items:
+            type: string
+        pantry_staples:
+          type: array
+          items:
+            type: string
+
+    BabyProfileRead:
+      allOf:
+        - $ref: '#/components/schemas/BabyProfileCreate'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            age_in_months:
+              type: integer
+              description: Computed from date_of_birth
+            created_at:
+              type: string
+              format: date-time
+            updated_at:
+              type: string
+              format: date-time
+
+    # ============ MEAL PLANS ============
+    PlanGenerateRequest:
+      type: object
+      properties:
+        num_days:
+          type: integer
+          enum: [3, 7]
+        plan_style:
+          type: string
+          enum: [variety, simple_repeats]
+          default: variety
+        introduce_new_foods:
+          type: boolean
+          default: false
+        start_date:
+          type: string
+          format: date
+          description: Defaults to tomorrow if not specified
+      required: [num_days]
+
+    MealSlot:
+      type: object
+      properties:
+        slot:
+          type: string
+          enum: [breakfast, lunch, dinner, snack]
+        recipe_id:
+          type: string
+          format: uuid
+        recipe_title:
+          type: string
+        is_new_food:
+          type: boolean
+        new_food_items:
+          type: array
+          items:
+            type: string
+        notes:
+          type: string
+
+    PlanDay:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        meals:
+          type: array
+          items:
+            $ref: '#/components/schemas/MealSlot'
+
+    ShoppingListItem:
+      type: object
+      properties:
+        food_item_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        category:
+          type: string
+        quantity:
+          type: number
+        unit:
+          type: string
+        checked:
+          type: boolean
+          default: false
+
+    MealPlanRead:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        start_date:
+          type: string
+          format: date
+        num_days:
+          type: integer
+        plan_style:
+          type: string
+        introduce_new_foods:
+          type: boolean
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlanDay'
+        shopping_list:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/ShoppingListItem'
+          description: Grouped by category
+        prep_suggestions:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+
+    MealPlanSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        start_date:
+          type: string
+          format: date
+        num_days:
+          type: integer
+        plan_style:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+    MealSwapRequest:
+      type: object
+      properties:
+        day_index:
+          type: integer
+          minimum: 0
+        meal_slot:
+          type: string
+          enum: [breakfast, lunch, dinner, snack]
+        new_recipe_id:
+          type: string
+          format: uuid
+      required: [day_index, meal_slot, new_recipe_id]
+
+    GenerationError:
+      type: object
+      properties:
+        error:
+          type: string
+        violations:
+          type: array
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+                enum: [block, warn]
+              path:
+                type: string
+              message:
+                type: string
+
+    # ============ LOGS ============
+    MealLogCreate:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        meal_slot:
+          type: string
+          enum: [breakfast, lunch, dinner, snack]
+        recipe_id:
+          type: string
+          format: uuid
+        meal_plan_id:
+          type: string
+          format: uuid
+        outcome:
+          type: string
+          enum: [ate, partial, refused]
+        notes:
+          type: string
+      required: [date, meal_slot, outcome]
+
+    MealLogRead:
+      allOf:
+        - $ref: '#/components/schemas/MealLogCreate'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            recipe_title:
+              type: string
+            created_at:
+              type: string
+              format: date-time
+
+    ReactionLogCreate:
+      type: object
+      properties:
+        occurred_at:
+          type: string
+          format: date-time
+        symptoms:
+          type: string
+          minLength: 1
+        severity:
+          type: string
+          enum: [mild, moderate, severe]
+          default: mild
+        suspected_food_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        suspected_recipe_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        notes:
+          type: string
+      required: [symptoms]
+
+    ReactionLogRead:
+      allOf:
+        - $ref: '#/components/schemas/ReactionLogCreate'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            suspected_food_names:
+              type: array
+              items:
+                type: string
+            suspected_recipe_titles:
+              type: array
+              items:
+                type: string
+            created_at:
+              type: string
+              format: date-time
+
+    # ============ REFERENCE DATA ============
+    RecipeSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        texture_level:
+          type: string
+        estimated_prep_minutes:
+          type: integer
+        allergen_tags:
+          type: array
+          items:
+            type: string
+        is_vegetarian:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: string
+
+    IntroducedFood:
+      type: object
+      properties:
+        food_item_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        category:
+          type: string
+        first_introduced:
+          type: string
+          format: date
+        ate_count:
+          type: integer
+        partial_count:
+          type: integer
+        refused_count:
+          type: integer
+        preference_ratio:
+          type: number
+          description: ate_count / total_count
+        has_reaction:
+          type: boolean
+
