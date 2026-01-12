@@ -101,6 +101,10 @@ backend/
 │   └── integration/
 │       └── test_api.py      # API integration tests
 ├── seed/                    # Recipe + food item seed data
+│   ├── foods.json           # FoodItem seed data
+│   └── recipes.json         # Recipe seed data (human-reviewed)
+├── scripts/
+│   └── bootstrap_seeds.py   # Web search + LLM to generate seed candidates
 ├── requirements.txt
 ├── pyproject.toml
 └── Dockerfile
@@ -220,3 +224,4 @@ All architectural choices align with constitution principles:
 - LLM outputs validated via Pydantic before any DB write
 - Separate validation step (not embedded in prompts)
 - Clear separation: api/ → services/ → rules/ → planner/
+- Web search node at graph edge (IO boundary respected)

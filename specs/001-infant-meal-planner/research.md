@@ -149,7 +149,49 @@
 
 ## Open Items for Implementation
 
-1. **Seed data creation**: Need to create 50 curated recipes with proper tags
+1. **Seed data bootstrap**: Run `scripts/bootstrap_seeds.py` to generate candidates, then human review
 2. **LLM prompt tuning**: Draft + repair prompts need iteration
 3. **LangSmith setup**: Optional but recommended for debugging
+4. **Web search integration**: Implement search node with rate limiting and caching
+
+## Bootstrap Seeds Script Design
+
+`scripts/bootstrap_seeds.py` will:
+
+1. **Search credible sources** for infant recipes:
+   - Query: "6 month baby puree recipes site:solidstarts.com"
+   - Query: "baby led weaning finger foods site:babyledweaning.com"
+   - Query: "infant breakfast recipes site:feedinglittles.com"
+
+2. **Extract recipe content** from search results:
+   - Fetch page content
+   - LLM extracts: title, ingredients, steps, texture level
+
+3. **Structure into Pydantic schema**:
+   ```python
+   class RecipeCandidate(BaseModel):
+       title: str
+       source_url: str
+       ingredients: list[Ingredient]
+       steps: list[str]
+       texture_level: Literal["puree", "soft_mash", "finger_food"]
+       estimated_prep_minutes: int
+       suggested_age_months: int
+   ```
+
+4. **Output to `seed/candidates.json`** for human review
+
+5. **Human review workflow**:
+   - Review each candidate
+   - Add allergen tags manually (LLM may miss)
+   - Verify safety notes
+   - Move approved to `seed/recipes.json`
+
+**Usage**:
+```bash
+cd backend
+python scripts/bootstrap_seeds.py --count 30 --output seed/candidates.json
+# Review candidates.json manually
+# Move approved recipes to seed/recipes.json
+```
 
