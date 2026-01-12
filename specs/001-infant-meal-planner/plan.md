@@ -20,7 +20,7 @@ Build a web app that lets parents sign up/login, create a baby profile, generate
 **Project Type**: Web application (separate frontend/backend)  
 **Performance Goals**: Page load <3s, plan generation <30s with progress indicator  
 **Constraints**: Single baby profile per user for v1 (multi-profile supported in spec for future)  
-**Scale/Scope**: Single user focus for MVP; ~50 seeded recipes
+**Scale/Scope**: Single user focus for MVP; ~20 seed recipes + web search augmentation
 
 ## Constitution Check
 
@@ -85,7 +85,8 @@ backend/
 │   │   ├── graph.py         # Main planner graph definition
 │   │   ├── nodes.py         # Graph node implementations
 │   │   ├── state.py         # PlannerState Pydantic model
-│   │   └── prompts.py       # LLM prompt templates
+│   │   ├── prompts.py       # LLM prompt templates
+│   │   └── search.py        # Web search for recipes (credible sources)
 │   ├── core/
 │   │   ├── config.py        # Settings from env vars
 │   │   ├── database.py      # DB session management
@@ -166,12 +167,17 @@ We don't rely on the LLM to enforce safety. The flow is:
          │
          ▼
 ┌─────────────────┐
-│retrieve_candidates│ ← Filter recipes by constraints
+│retrieve_seeds   │ ← Filter seed recipes from DB
 └────────┬────────┘
          │
          ▼
 ┌─────────────────┐
-│generate_draft   │ ← LLM creates plan (structured output)
+│ search_recipes  │ ← Web search credible sources (solidstarts, etc.)
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│generate_draft   │ ← LLM creates plan from seeds + web results
 └────────┬────────┘
          │
          ▼

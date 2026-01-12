@@ -245,16 +245,30 @@ No explicit status column; plan is only persisted after validation passes.
 
 ## Seed Data Requirements
 
-### FoodItem Seeds (~100 items)
-- Common infant-safe ingredients
-- Pre-tagged with allergens
-- Choking hazard flags set
-- Honey marked as blocked_under_12m
+### FoodItem Seeds (~50 items)
+- Common infant-safe ingredients (fruits, vegetables, proteins, grains)
+- Pre-tagged with allergens (big 8: dairy, egg, peanut, tree nut, wheat, soy, fish, shellfish)
+- Choking hazard flags set with safe-form notes
+- Honey marked as blocked_under_12m with CDC reference
 
-### Recipe Seeds (~50 recipes)
-- Mix of textures: puree, soft_mash, finger_food
-- Variety of meal slots: breakfast, lunch, dinner, snack
-- Vegetarian and omnivore options
-- Range of prep times (5-30 minutes)
+### Recipe Seeds (~20 recipes)
+Minimal baseline for testing and offline fallback. Web search provides additional variety.
+
+Target distribution:
+- 5 breakfast (2 puree, 2 soft, 1 finger food)
+- 5 lunch (mix of textures)
+- 5 dinner (mix of textures)
+- 5 snacks (quick, portable options)
+
+Requirements:
+- Mix of vegetarian and omnivore
+- Range of prep times (5-20 minutes)
 - Properly tagged with allergens and safety notes
+- At least 2 recipes per texture level
+
+### Bootstrap Process
+1. Use web search + LLM to generate candidate recipes from credible sources
+2. Human review for safety and appropriateness
+3. Add approved recipes to seed DB with proper tagging
+4. Run safety validation tests against seed data
 

@@ -77,19 +77,38 @@
 - Vite + React: No SSR out of box; less suited for SEO landing page
 - SvelteKit: Smaller talent pool; TypeScript support less mature
 
-### 6. Recipe Data Strategy: Curated Seed Library
+### 6. Recipe Data Strategy: Hybrid (Seed Library + Web Search)
 
-**Decision**: Ground LLM on ~50 curated recipes seeded in DB (not pure AI generation)
+**Decision**: Small curated seed library (~20 recipes) + runtime web search for variety
 
 **Rationale**:
-- Deterministic validation is more reliable when recipes are pre-vetted
-- Allergen tags, safety notes pre-populated accurately
-- LLM selects/combines from known-safe recipes rather than inventing
-- Reduces hallucination risk; easier to test
+- Seed library provides reliable baseline for testing and offline fallback
+- Web search adds variety, cultural diversity, and fresh content
+- Deterministic validation catches any unsafe web content
+- Reduces manual curation burden while maintaining safety
+
+**Approach**:
+- ~20 core seed recipes (manually reviewed, properly tagged)
+- Web search node queries credible infant nutrition sources at plan generation
+- LLM structures web results into recipe schema
+- All recipes (seed + web) pass through deterministic safety validation
+
+**Credible Sources for Web Search**:
+- solidstarts.com - Comprehensive food database with age/texture guidance
+- babyledweaning.com - BLW-focused recipes
+- feedinglittles.com - Registered dietitian content
+- healthychildren.org - AAP (American Academy of Pediatrics) guidance
+- nhs.uk/start-for-life - UK NHS weaning guidelines
+
+**Seed Bootstrap Strategy**:
+- One-time LLM + web search to generate candidate recipes
+- Human review and approval before adding to seed DB
+- Focus on: 5 breakfast, 5 lunch, 5 dinner, 5 snack recipes across textures
 
 **Alternatives Considered**:
-- Pure AI recipe generation: Higher creativity but unpredictable safety
-- External recipe API: Dependency on third party; format inconsistency
+- 50+ curated recipes only: Too much manual curation burden
+- Pure web search: No offline fallback; less testable
+- External recipe API: No infant-specific APIs found; format inconsistency
 
 ### 7. LLM Provider
 
