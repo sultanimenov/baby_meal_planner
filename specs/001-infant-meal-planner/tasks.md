@@ -142,11 +142,12 @@
 ### Frontend (US2)
 
 - [ ] T070 [P] [US2] Create plan request form in frontend/src/app/(auth)/plan/new/page.tsx
-- [ ] T071 [P] [US2] Create PlanGenerationProgress component in frontend/src/components/plan/PlanGenerationProgress.tsx
-- [ ] T072 [US2] Create plan view page in frontend/src/app/(auth)/plan/[id]/page.tsx
-- [ ] T073 [P] [US2] Create PlanDayCard component in frontend/src/components/plan/PlanDayCard.tsx
-- [ ] T074 [P] [US2] Create MealCard component in frontend/src/components/plan/MealCard.tsx
-- [ ] T075 [P] [US2] Create SafetyBadge component in frontend/src/components/plan/SafetyBadge.tsx
+- [ ] T071 [P] [US2] Add WHO meal frequency guidance display to plan request form in frontend/src/components/plan/MealFrequencyGuidance.tsx
+- [ ] T072 [P] [US2] Create PlanGenerationProgress component in frontend/src/components/plan/PlanGenerationProgress.tsx
+- [ ] T073 [US2] Create plan view page in frontend/src/app/(auth)/plan/[id]/page.tsx
+- [ ] T074 [P] [US2] Create PlanDayCard component in frontend/src/components/plan/PlanDayCard.tsx
+- [ ] T075 [P] [US2] Create MealCard component in frontend/src/components/plan/MealCard.tsx
+- [ ] T076 [P] [US2] Create SafetyBadge component in frontend/src/components/plan/SafetyBadge.tsx
 
 **Checkpoint**: User Story 2 complete - users can generate validated meal plans
 
@@ -160,18 +161,18 @@
 
 ### Backend (US3)
 
-- [ ] T076 [US3] Add shopping list derivation to derive_artifacts in backend/app/planner/nodes.py
-- [ ] T077 [US3] Add prep_suggestions derivation to derive_artifacts in backend/app/planner/nodes.py
-- [ ] T078 [US3] Add meal swap endpoint to plans API in backend/app/api/plans.py
+- [ ] T077 [US3] Add shopping list derivation to derive_artifacts in backend/app/planner/nodes.py
+- [ ] T078 [US3] Add prep_suggestions derivation to derive_artifacts in backend/app/planner/nodes.py
+- [ ] T079 [US3] Add meal swap endpoint to plans API in backend/app/api/plans.py
 
 ### Frontend (US3)
 
-- [ ] T079 [P] [US3] Create ShoppingList component in frontend/src/components/plan/ShoppingList.tsx
-- [ ] T080 [P] [US3] Create ShoppingListItem component in frontend/src/components/plan/ShoppingListItem.tsx
-- [ ] T081 [P] [US3] Create PrepSuggestions component in frontend/src/components/plan/PrepSuggestions.tsx
-- [ ] T082 [US3] Add share functionality using Web Share API in frontend/src/components/plan/ShoppingList.tsx
-- [ ] T083 [US3] Create MealSwapModal component in frontend/src/components/plan/MealSwapModal.tsx
-- [ ] T084 [US3] Integrate shopping list and swap into plan view page
+- [ ] T080 [P] [US3] Create ShoppingList component in frontend/src/components/plan/ShoppingList.tsx
+- [ ] T081 [P] [US3] Create ShoppingListItem component in frontend/src/components/plan/ShoppingListItem.tsx
+- [ ] T082 [P] [US3] Create PrepSuggestions component in frontend/src/components/plan/PrepSuggestions.tsx
+- [ ] T083 [US3] Add share functionality using Web Share API in frontend/src/components/plan/ShoppingList.tsx
+- [ ] T084 [US3] Create MealSwapModal component in frontend/src/components/plan/MealSwapModal.tsx
+- [ ] T085 [US3] Integrate shopping list and swap into plan view page
 
 **Checkpoint**: User Story 3 complete - users can export and share shopping lists
 
@@ -185,19 +186,19 @@
 
 ### Backend (US4)
 
-- [ ] T085 [US4] Create MealLog model in backend/app/models/logs.py
-- [ ] T086 [US4] Generate Alembic migration for meal_logs table
-- [ ] T087 [P] [US4] Create log Pydantic schemas in backend/app/schemas/logs.py
-- [ ] T088 [US4] Create LogService in backend/app/services/log_service.py
-- [ ] T089 [US4] Create meal log API endpoints in backend/app/api/logs.py
-- [ ] T090 [US4] Register logs router in backend/app/main.py
+- [ ] T086 [US4] Create MealLog model in backend/app/models/logs.py
+- [ ] T087 [US4] Generate Alembic migration for meal_logs table
+- [ ] T088 [P] [US4] Create log Pydantic schemas in backend/app/schemas/logs.py
+- [ ] T089 [US4] Create LogService in backend/app/services/log_service.py
+- [ ] T090 [US4] Create meal log API endpoints in backend/app/api/logs.py
+- [ ] T091 [US4] Register logs router in backend/app/main.py
 
 ### Frontend (US4)
 
-- [ ] T091 [US4] Create Today page in frontend/src/app/(auth)/today/page.tsx
-- [ ] T092 [P] [US4] Create TodayMealCard component in frontend/src/components/logging/TodayMealCard.tsx
-- [ ] T093 [P] [US4] Create MealLogModal component in frontend/src/components/logging/MealLogModal.tsx
-- [ ] T094 [US4] Add meal log submission and status update to Today page
+- [ ] T092 [US4] Create Today page in frontend/src/app/(auth)/today/page.tsx
+- [ ] T093 [P] [US4] Create TodayMealCard component in frontend/src/components/logging/TodayMealCard.tsx
+- [ ] T094 [P] [US4] Create MealLogModal component in frontend/src/components/logging/MealLogModal.tsx
+- [ ] T095 [US4] Add meal log submission and status update to Today page
 
 **Checkpoint**: User Story 4 complete - users can log meals in under 15 seconds
 
@@ -211,16 +212,16 @@
 
 ### Backend (US5)
 
-- [ ] T095 [US5] Create ReactionLog model in backend/app/models/logs.py
-- [ ] T096 [US5] Generate Alembic migration for reaction_logs table
-- [ ] T097 [US5] Add reaction log endpoints to logs API in backend/app/api/logs.py
+- [ ] T096 [US5] Create ReactionLog model in backend/app/models/logs.py
+- [ ] T097 [US5] Generate Alembic migration for reaction_logs table
+- [ ] T098 [US5] Add reaction log endpoints to logs API in backend/app/api/logs.py
 
 ### Frontend (US5)
 
-- [ ] T098 [P] [US5] Create ReactionLogForm component in frontend/src/components/logging/ReactionLogForm.tsx
-- [ ] T099 [P] [US5] Create FoodSelector component in frontend/src/components/logging/FoodSelector.tsx
-- [ ] T100 [US5] Create reaction history page in frontend/src/app/(auth)/history/reactions/page.tsx
-- [ ] T101 [P] [US5] Create ReactionCard component in frontend/src/components/logging/ReactionCard.tsx
+- [ ] T099 [P] [US5] Create ReactionLogForm component in frontend/src/components/logging/ReactionLogForm.tsx
+- [ ] T100 [P] [US5] Create FoodSelector component in frontend/src/components/logging/FoodSelector.tsx
+- [ ] T101 [US5] Create reaction history page in frontend/src/app/(auth)/history/reactions/page.tsx
+- [ ] T102 [P] [US5] Create ReactionCard component in frontend/src/components/logging/ReactionCard.tsx
 
 **Checkpoint**: User Story 5 complete - users can log and view reactions
 
@@ -234,15 +235,15 @@
 
 ### Backend (US6)
 
-- [ ] T102 [US6] Create introduced foods endpoint in backend/app/api/logs.py
-- [ ] T103 [US6] Add preference ratio calculation to LogService
+- [ ] T103 [US6] Create introduced foods endpoint in backend/app/api/logs.py
+- [ ] T104 [US6] Add preference ratio calculation to LogService
 
 ### Frontend (US6)
 
-- [ ] T104 [US6] Create food history page in frontend/src/app/(auth)/history/foods/page.tsx
-- [ ] T105 [P] [US6] Create IntroducedFoodCard component in frontend/src/components/history/IntroducedFoodCard.tsx
-- [ ] T106 [P] [US6] Create FoodDetailModal component in frontend/src/components/history/FoodDetailModal.tsx
-- [ ] T107 [US6] Add sorting controls to food history page
+- [ ] T105 [US6] Create food history page in frontend/src/app/(auth)/history/foods/page.tsx
+- [ ] T106 [P] [US6] Create IntroducedFoodCard component in frontend/src/components/history/IntroducedFoodCard.tsx
+- [ ] T107 [P] [US6] Create FoodDetailModal component in frontend/src/components/history/FoodDetailModal.tsx
+- [ ] T108 [US6] Add sorting controls to food history page
 
 **Checkpoint**: User Story 6 complete - users can view food preferences
 
@@ -256,10 +257,10 @@
 
 ### Backend (US7)
 
-- [ ] T108 [US7] Add history_summary computation to load_context node in backend/app/planner/nodes.py
-- [ ] T109 [US7] Update generate_draft prompt to use history_summary in backend/app/planner/prompts.py
-- [ ] T110 [US7] Add allergen introduction gap logic to search_recipes in backend/app/planner/search.py
-- [ ] T111 [US7] Create integration test for adaptive generation in backend/tests/integration/test_adaptive.py
+- [ ] T109 [US7] Add history_summary computation to load_context node in backend/app/planner/nodes.py
+- [ ] T110 [US7] Update generate_draft prompt to use history_summary in backend/app/planner/prompts.py
+- [ ] T111 [US7] Add allergen introduction gap logic to search_recipes in backend/app/planner/search.py
+- [ ] T112 [US7] Create integration test for adaptive generation in backend/tests/integration/test_adaptive.py
 
 **Checkpoint**: User Story 7 complete - plans adapt to user preferences
 
@@ -273,14 +274,14 @@
 
 ### Backend (US8)
 
-- [ ] T112 [US8] Add PUT endpoint for profile updates in backend/app/api/profiles.py
-- [ ] T113 [US8] Add profile change detection to PlanService
+- [ ] T113 [US8] Add PUT endpoint for profile updates in backend/app/api/profiles.py
+- [ ] T114 [US8] Add profile change detection to PlanService
 
 ### Frontend (US8)
 
-- [ ] T114 [US8] Create profile edit page in frontend/src/app/(auth)/profile/edit/page.tsx
-- [ ] T115 [P] [US8] Create ProfileEditForm component in frontend/src/components/forms/ProfileEditForm.tsx
-- [ ] T116 [US8] Add regeneration notification to plan view when profile changed
+- [ ] T115 [US8] Create profile edit page in frontend/src/app/(auth)/profile/edit/page.tsx
+- [ ] T116 [P] [US8] Create ProfileEditForm component in frontend/src/components/forms/ProfileEditForm.tsx
+- [ ] T117 [US8] Add regeneration notification to plan view when profile changed
 
 **Checkpoint**: User Story 8 complete - users can edit profiles
 
@@ -290,13 +291,13 @@
 
 **Purpose**: Final improvements across all user stories
 
-- [ ] T117 [P] Add error boundaries to all pages in frontend/
-- [ ] T118 [P] Add loading states to all async operations in frontend/
-- [ ] T119 [P] Add CORS configuration for production in backend/app/main.py
-- [ ] T120 Create Dockerfile for backend in backend/Dockerfile
-- [ ] T121 [P] Add health check endpoint in backend/app/api/health.py
-- [ ] T122 Update README.md with complete setup and deployment instructions
-- [ ] T123 Run quickstart.md validation to verify all flows work
+- [ ] T118 [P] Add error boundaries to all pages in frontend/
+- [ ] T119 [P] Add loading states to all async operations in frontend/
+- [ ] T120 [P] Add CORS configuration for production in backend/app/main.py
+- [ ] T121 Create Dockerfile for backend in backend/Dockerfile
+- [ ] T122 [P] Add health check endpoint in backend/app/api/health.py
+- [ ] T123 Update README.md with complete setup and deployment instructions
+- [ ] T124 Run quickstart.md validation to verify all flows work
 
 ---
 
@@ -341,7 +342,7 @@ T022, T023, T024  # Frontend lib modules
 # Safety rules are independent:
 T045, T046, T047, T048  # All rule implementations
 # Frontend components are independent:
-T070, T071, T073, T074, T075  # Plan UI components
+T070, T072, T074, T075, T076  # Plan UI components
 ```
 
 ---
