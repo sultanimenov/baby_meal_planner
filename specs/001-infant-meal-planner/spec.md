@@ -157,7 +157,7 @@ A parent updates the baby profile as preferences change (e.g., transition from p
 - **Manual meal swap**: When user swaps a meal, shopping list recalculates automatically; prep suggestions update if affected
 - **Password reset**: User can request password reset via email link
 - **Logout**: User can log out from any page; session is cleared
-- **Login errors**: Invalid credentials show user-friendly error; locked account after 5 failed attempts with unlock via email
+- **Login errors**: Invalid credentials show user-friendly error (v1: no rate limiting; v2: lock after 5 failed attempts)
 - **AI generation failure**: If plan generation fails, system retries once automatically; if retry fails, user sees friendly error message with "Try Again" button; no partial/corrupt plans are saved
 
 ## Requirements *(mandatory)*
