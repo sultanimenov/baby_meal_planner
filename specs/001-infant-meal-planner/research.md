@@ -28,10 +28,16 @@
 - Supports SQLModel/SQLAlchemy backends
 - JWT in httpOnly cookies for web security (no localStorage token exposure)
 - Reduces custom auth code (security-sensitive area)
+- **Email verification included**: provides `/auth/request-verify-token` and `/auth/verify` endpoints; user model includes `is_verified` field
 
 **Alternatives Considered**:
 - Custom JWT implementation: More control but higher security risk
 - Auth0/Clerk: External dependency; adds latency; overkill for MVP
+
+**Email Verification Coverage** (FR-001):
+- User model: `is_verified` field (managed by fastapi-users)
+- Endpoints: `/auth/request-verify-token`, `/auth/verify` (auto-generated)
+- T028 (Configure fastapi-users) includes enabling verification flow
 
 ### 3. Database ORM: SQLModel
 
