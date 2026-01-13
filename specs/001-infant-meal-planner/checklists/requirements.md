@@ -40,14 +40,14 @@
 ## Notes
 
 - **Assumptions documented in spec**:
-  - Multiple baby profiles per account supported
+  - Single baby profile per account for v1 (multi-profile deferred)
   - Email/password auth (explicitly requested by user)
   - Safety rules based on CDC guidance (explicitly referenced)
   - WHO feeding frequency guidance as defaults (explicitly referenced)
   
 - **Scope boundaries clear**:
   - Web-only for v1 (no mobile)
-  - Multiple baby profiles with data isolation
+  - Single baby profile per account (v1)
   - No medical/clinical recommendations
   - No calorie/macro tracking
   - No social/multi-user features

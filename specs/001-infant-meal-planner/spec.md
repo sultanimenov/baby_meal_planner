@@ -9,7 +9,7 @@
 
 ### User Story 1 - Account Creation & Baby Profile Setup (Priority: P1)
 
-A new parent visits the app landing page and creates an account to start planning meals for their baby. After signup, they complete the onboarding process by creating a baby profile with all necessary preferences.
+A new parent visits the app landing page and creates an account to start planning meals for their baby. After signup, they complete the onboarding process by creating a baby profile with all necessary preferences. (v1 supports one baby profile per account.)
 
 **Why this priority**: Without authentication and baby profile setup, no other functionality is accessible. This is the foundational entry point for all users.
 
@@ -21,10 +21,7 @@ A new parent visits the app landing page and creates an account to start plannin
 2. **Given** a logged-in user with no baby profile, **When** they access any protected page, **Then** they are redirected to the "Create Baby Profile" onboarding form
 3. **Given** a user on the onboarding form, **When** they complete all required fields (nickname, DOB, feeding style, meals/day target), **Then** the baby profile is saved and they are directed to the Dashboard
 4. **Given** a user on the onboarding form, **When** they submit with missing required fields, **Then** validation errors are displayed and submission is blocked
-5. **Given** a returning user with one baby profile, **When** they log in, **Then** they are directed to the Dashboard/Today view for that profile
-6. **Given** a returning user with multiple baby profiles, **When** they log in, **Then** they are directed to a profile selector or their most recently active profile
-7. **Given** a logged-in user, **When** they access the profile switcher, **Then** they see all their baby profiles and can select one to view
-8. **Given** a logged-in user with at least one profile, **When** they click "Add Baby", **Then** they can create an additional baby profile
+5. **Given** a returning user with an existing baby profile, **When** they log in, **Then** they are directed to the Dashboard/Today view
 
 ---
 
@@ -153,7 +150,6 @@ A parent updates the baby profile as preferences change (e.g., transition from p
 ### Edge Cases
 
 - **No baby profile**: User logs in but has no baby profile → forced redirection to onboarding before any other feature access
-- **Multiple profiles - data isolation**: Each baby profile maintains completely independent meal plans, logs, reactions, and food history; no cross-contamination between profiles
 - **Profile deletion**: User can delete a baby profile; requires confirmation; all associated data (plans, logs, reactions) is removed
 - **DOB/feeding style change mid-week**: Clear notification explaining plan may be outdated; option to regenerate
 - **"Introduce allergens" toggle**: When toggled on/off, existing logs retain their labels; only new plans are affected
@@ -180,9 +176,10 @@ A parent updates the baby profile as preferences change (e.g., transition from p
 - **FR-007**: System MUST collect optional profile data: known allergies, avoid list, dietary preferences (vegetarian/omnivore), cultural cuisine preferences
 - **FR-008**: System MUST collect practical constraints: max prep time per day, batch-cook days, pantry staples
 - **FR-009**: System MUST support editing all baby profile fields after initial creation
-- **FR-010**: System MUST support multiple baby profiles per account
-- **FR-010a**: System MUST allow users to switch between baby profiles from any screen
-- **FR-010b**: System MUST allow creating additional baby profiles after initial onboarding
+- **FR-010**: System MUST limit to one baby profile per account for v1
+- **FR-010a (v2)**: System MUST support multiple baby profiles per account
+- **FR-010b (v2)**: System MUST allow users to switch between baby profiles from any screen
+- **FR-010c (v2)**: System MUST allow creating additional baby profiles after initial onboarding
 
 **Safety Validation**
 - **FR-011**: System MUST block honey and honey-containing items for babies under 12 months (CDC guidance)
@@ -227,7 +224,7 @@ A parent updates the baby profile as preferences change (e.g., transition from p
 ### Key Entities
 
 - **UserAccount**: Authentication identity containing email, password hash, email verification status, account creation date
-- **BabyProfile**: Baby's nickname, date of birth (for age calculation), feeding style preference, daily meal target, allergies list, avoid list, dietary preferences, cultural preferences, practical constraints (prep time, batch days, staples). Multiple profiles supported per account; each profile maintains independent meal plans, logs, and history
+- **BabyProfile**: Baby's nickname, date of birth (for age calculation), feeding style preference, daily meal target, allergies list, avoid list, dietary preferences, cultural preferences, practical constraints (prep time, batch days, staples). One profile per account in v1
 - **FoodItem**: Name, category, allergen tags (e.g., dairy, egg, peanut, tree nut, wheat, soy, fish, shellfish), texture suitability levels, age suitability, safety notes, choking hazard flag
 - **Recipe**: AI-generated at plan creation time. Contains name, ingredient list (with quantities), preparation steps, texture level, total prep time, allergen tags (derived from ingredients), age suitability, safe preparation notes for hazardous ingredients. Generated recipes are validated against safety rules before display
 - **MealPlan**: Associated baby profile, date range, plan style, list of day entries. Each day contains meal slots with recipe references, "new food" flags, and notes. All plans retained indefinitely and accessible via history view; deletion only via baby profile deletion
