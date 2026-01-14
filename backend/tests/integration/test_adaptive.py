@@ -7,7 +7,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from app.planner.nodes import _compute_history_summary, load_context
+from app.planner.nodes import _compute_history_summary, create_load_context
 from app.planner.search import (
     filter_recipes_by_allergen_gap,
     get_recently_introduced_allergens,
@@ -117,8 +117,8 @@ class TestComputeHistorySummary:
         result = await _compute_history_summary(mock_session, baby_profile_id)
 
         assert result is not None
-        assert "refused_foods" in result
-        assert "Peas" in result["refused_foods"]
+        assert "disliked_foods" in result
+        assert "Peas" in result["disliked_foods"]
 
 
 class TestAllergenGap:
@@ -238,17 +238,17 @@ class TestLoadContextWithHistory:
         mock_logs_result.scalars.return_value.all.return_value = []
         mock_session.execute = AsyncMock(return_value=mock_logs_result)
 
-        state = PlannerState(
-            user_id=user_id,
-            baby_profile_id=baby_profile_id,
-            num_days=3,
-            plan_style="variety",
-        )
+        state: PlannerState = {
+            "user_id": str(user_id),
+            "baby_profile_id": str(baby_profile_id),
+            "num_days": 3,
+            "plan_style": "variety",
+        }
 
-        result = await load_context(state, {"session": mock_session})
+        # Create the load_context function with the mock session
+        load_context = create_load_context(mock_session)
+        result = await load_context(state)
 
         assert "history_summary" in result
         assert result["age_in_months"] == 9
         assert result["feeding_style"] == "mixed"
-
-

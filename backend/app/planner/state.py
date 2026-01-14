@@ -8,7 +8,16 @@ from typing import Any, TypedDict
 class PlannerState(TypedDict, total=False):
     """State model for meal plan generation graph.
     
-    Using TypedDict for LangGraph compatibility.
+    Note on TypedDict vs Pydantic (per constitution II.47):
+    -------------------------------------------------------
+    LangGraph requires TypedDict for state management compatibility.
+    Pydantic validation is applied separately at LLM output boundaries
+    (see app/schemas/llm_output.py) to satisfy constitution requirement
+    that "all LLM outputs MUST be structured and validated before use."
+    
+    The TypedDict here defines the state schema for graph transitions,
+    while Pydantic models validate external data (LLM responses) before
+    they enter the state.
     """
 
     # Input

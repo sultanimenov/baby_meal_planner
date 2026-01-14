@@ -1,10 +1,12 @@
 """LangGraph node implementations for meal plan generation."""
 
+import logging
 import uuid
 from collections import defaultdict
 from datetime import date, timedelta
 from typing import Any, Callable
 
+from pydantic import ValidationError
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -16,6 +18,11 @@ from app.models.recipe import Recipe
 from app.planner.prompts import get_generate_draft_prompt, get_repair_prompt
 from app.planner.search import search_recipes
 from app.planner.state import PlannerState
+from app.schemas.llm_output import LLMDraftPlan
+
+# Logger for state transitions (per constitution II.56)
+logger = logging.getLogger(__name__)
+
 # Safety rules imported but using simplified inline checks for MVP
 # from app.rules import check_avoid_list, check_choking_hazards, check_honey_under_12m, check_meal_slots_valid
 
@@ -25,6 +32,8 @@ def create_load_context(session: AsyncSession) -> Callable:
 
     async def load_context(state: dict[str, Any]) -> dict[str, Any]:
         """Load baby profile context and compute derived values."""
+        logger.info("STATE_TRANSITION: load_context started")
+        
         baby_profile_id = state.get("baby_profile_id")
         if isinstance(baby_profile_id, str):
             baby_profile_id = uuid.UUID(baby_profile_id)
@@ -32,6 +41,7 @@ def create_load_context(session: AsyncSession) -> Callable:
         # Load baby profile
         profile = await session.get(BabyProfile, baby_profile_id)
         if not profile:
+            logger.error("STATE_TRANSITION: load_context failed - profile not found")
             raise ValueError(f"Baby profile {baby_profile_id} not found")
 
         # Compute age
@@ -39,6 +49,12 @@ def create_load_context(session: AsyncSession) -> Callable:
 
         # Load history summary from meal logs
         history_summary = await _compute_history_summary(session, baby_profile_id)
+
+        logger.info(
+            "STATE_TRANSITION: load_context completed - "
+            f"age={age_in_months}mo, feeding_style={profile.feeding_style}, "
+            f"meals_per_day={profile.meals_per_day}"
+        )
 
         return {
             "age_in_months": age_in_months,
@@ -181,6 +197,8 @@ def create_retrieve_seeds(session: AsyncSession) -> Callable:
 
     async def retrieve_seeds(state: dict[str, Any]) -> dict[str, Any]:
         """Retrieve seed recipes from database filtered by profile."""
+        logger.info("STATE_TRANSITION: retrieve_seeds started")
+        
         # Build query filters
         query = select(Recipe)
 
@@ -231,6 +249,8 @@ def create_retrieve_seeds(session: AsyncSession) -> Callable:
             }
             seed_recipes.append(recipe_dict)
 
+        logger.info(f"STATE_TRANSITION: retrieve_seeds completed - found {len(seed_recipes)} recipes")
+
         return {"seed_recipes": seed_recipes}
 
     return retrieve_seeds
@@ -253,13 +273,20 @@ def create_generate_draft(session: AsyncSession) -> Callable:
 
     async def generate_draft(state: dict[str, Any]) -> dict[str, Any]:
         """Generate draft meal plan using LLM."""
+        import json
         from langchain_openai import ChatOpenAI
+
+        logger.info("STATE_TRANSITION: generate_draft started")
+        num_days = state.get("num_days", 3)
 
         # Combine recipes
         all_recipes = state.get("seed_recipes", []) + state.get("web_recipes", [])
 
         if not all_recipes:
+            logger.error("STATE_TRANSITION: generate_draft failed - no recipes available")
             raise ValueError("No recipes available for plan generation")
+
+        logger.info(f"STATE_TRANSITION: generate_draft - using {len(all_recipes)} recipes")
 
         # Get start date (today)
         start_date = date.today()
@@ -269,7 +296,7 @@ def create_generate_draft(session: AsyncSession) -> Callable:
             age_in_months=state.get("age_in_months", 6),
             feeding_style=state.get("feeding_style", "puree"),
             meals_per_day=state.get("meals_per_day", 2),
-            num_days=state.get("num_days", 3),
+            num_days=num_days,
             plan_style=state.get("plan_style", "variety"),
             introduce_new_foods=state.get("introduce_new_foods", False),
             allergens=state.get("allergens", []),
@@ -286,10 +313,11 @@ def create_generate_draft(session: AsyncSession) -> Callable:
             temperature=0.7,
             api_key=settings.openai_api_key,
         )
+        
+        logger.info("STATE_TRANSITION: generate_draft - calling LLM")
         response = await llm.ainvoke(prompt)
 
         # Parse response as JSON
-        import json
         try:
             # Extract JSON from response
             content = response.content
@@ -301,12 +329,27 @@ def create_generate_draft(session: AsyncSession) -> Callable:
             else:
                 json_str = content.strip()
 
-            draft_plan = json.loads(json_str)
+            raw_plan = json.loads(json_str)
         except (json.JSONDecodeError, IndexError) as e:
+            logger.error(f"STATE_TRANSITION: generate_draft failed - JSON parse error: {e}")
             raise ValueError(f"Failed to parse LLM response as JSON: {e}")
 
+        # Validate LLM output using Pydantic (per constitution II.47)
+        try:
+            validated_plan = LLMDraftPlan.from_llm_response(raw_plan)
+            draft_plan = validated_plan.to_dict()
+            logger.info(
+                f"STATE_TRANSITION: generate_draft - LLM output validated, "
+                f"got {len(draft_plan.get('days', []))} days"
+            )
+        except ValidationError as e:
+            logger.error(f"STATE_TRANSITION: generate_draft - Pydantic validation failed: {e}")
+            raise ValueError(f"LLM output failed schema validation: {e}")
+
         # Normalize dates and meal structure
-        draft_plan = _normalize_draft_plan(draft_plan, start_date, state.get("num_days", 3))
+        draft_plan = _normalize_draft_plan(draft_plan, start_date, num_days)
+        
+        logger.info("STATE_TRANSITION: generate_draft completed successfully")
 
         return {
             "draft_plan": draft_plan,
@@ -322,6 +365,9 @@ def create_validate_plan(session: AsyncSession) -> Callable:
 
     async def validate_plan(state: dict[str, Any]) -> dict[str, Any]:
         """Validate draft plan against safety rules."""
+        repair_attempts = state.get("repair_attempts", 0)
+        logger.info(f"STATE_TRANSITION: validate_plan started (attempt {repair_attempts + 1})")
+        
         draft_plan = state.get("draft_plan", {})
         age_in_months = state.get("age_in_months", 6)
         avoid_list = state.get("avoid_list", [])
@@ -335,6 +381,7 @@ def create_validate_plan(session: AsyncSession) -> Callable:
         
         if not days:
             errors.append("Plan has no days")
+            logger.warning("STATE_TRANSITION: validate_plan failed - plan has no days")
             return {"validation_passed": False, "validation_errors": errors}
         
         # Check we have exactly num_days days
@@ -376,6 +423,14 @@ def create_validate_plan(session: AsyncSession) -> Callable:
 
         validation_passed = len(errors) == 0
 
+        if validation_passed:
+            logger.info("STATE_TRANSITION: validate_plan passed - no violations found")
+        else:
+            logger.warning(
+                f"STATE_TRANSITION: validate_plan failed - {len(errors)} violation(s): "
+                f"{errors[:3]}{'...' if len(errors) > 3 else ''}"
+            )
+
         return {
             "validation_passed": validation_passed,
             "validation_errors": errors,
@@ -389,8 +444,8 @@ def create_repair_plan(session: AsyncSession) -> Callable:
 
     async def repair_plan(state: dict[str, Any]) -> dict[str, Any]:
         """Repair plan to fix validation errors."""
-        from langchain_openai import ChatOpenAI
         import json
+        from langchain_openai import ChatOpenAI
 
         draft_plan = state.get("draft_plan", {})
         errors = state.get("validation_errors", [])
@@ -398,6 +453,11 @@ def create_repair_plan(session: AsyncSession) -> Callable:
         all_recipes = state.get("seed_recipes", []) + state.get("web_recipes", [])
         num_days = state.get("num_days", 3)
         start_date = date.today()
+
+        logger.info(
+            f"STATE_TRANSITION: repair_plan started (attempt {repair_attempts + 1}) - "
+            f"fixing {len(errors)} error(s)"
+        )
 
         # Generate repair prompt
         prompt = get_repair_prompt(
@@ -427,11 +487,23 @@ def create_repair_plan(session: AsyncSession) -> Callable:
             else:
                 json_str = content.strip()
 
-            repaired_plan = json.loads(json_str)
+            raw_repaired = json.loads(json_str)
+            
+            # Validate repaired plan using Pydantic (per constitution II.47)
+            try:
+                validated_plan = LLMDraftPlan.from_llm_response(raw_repaired)
+                repaired_plan = validated_plan.to_dict()
+                logger.info("STATE_TRANSITION: repair_plan - LLM repair output validated")
+            except ValidationError as ve:
+                logger.warning(f"STATE_TRANSITION: repair_plan - validation failed: {ve}")
+                repaired_plan = raw_repaired  # Use raw if validation fails
+                
             # Normalize dates and meal structure after repair
             repaired_plan = _normalize_draft_plan(repaired_plan, start_date, num_days)
+            logger.info("STATE_TRANSITION: repair_plan completed successfully")
         except (json.JSONDecodeError, IndexError) as e:
             # If repair fails, keep old plan
+            logger.warning(f"STATE_TRANSITION: repair_plan failed to parse JSON: {e}")
             repaired_plan = draft_plan
 
         return {
@@ -447,6 +519,7 @@ def create_derive_artifacts(session: AsyncSession) -> Callable:
 
     async def derive_artifacts(state: dict[str, Any]) -> dict[str, Any]:
         """Derive shopping list and prep suggestions from plan."""
+        logger.info("STATE_TRANSITION: derive_artifacts started")
         draft_plan = state.get("draft_plan", {})
 
         # Aggregate ingredients for shopping list
@@ -496,6 +569,11 @@ def create_derive_artifacts(session: AsyncSession) -> Callable:
                             "time_saved_minutes": prep_minutes // 2,
                         })
 
+        logger.info(
+            f"STATE_TRANSITION: derive_artifacts completed - "
+            f"{len(ingredient_quantities)} ingredients, {len(prep_suggestions)} prep suggestions"
+        )
+
         return {
             "shopping_list": shopping_list,
             "prep_suggestions": prep_suggestions,
@@ -509,6 +587,8 @@ def create_persist_plan(session: AsyncSession) -> Callable:
 
     async def persist_plan(state: dict[str, Any]) -> dict[str, Any]:
         """Persist the validated meal plan to database."""
+        logger.info("STATE_TRANSITION: persist_plan started")
+        
         user_id = state.get("user_id")
         baby_profile_id = state.get("baby_profile_id")
         num_days = state.get("num_days", 3)
@@ -546,6 +626,12 @@ def create_persist_plan(session: AsyncSession) -> Callable:
         session.add(meal_plan)
         await session.commit()
         await session.refresh(meal_plan)
+
+        logger.info(
+            f"STATE_TRANSITION: persist_plan completed - "
+            f"plan_id={meal_plan.id}, num_days={num_days}, "
+            f"repair_attempts={state.get('repair_attempts', 0)}"
+        )
 
         return {"meal_plan_id": str(meal_plan.id)}
 
