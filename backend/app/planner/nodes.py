@@ -1,6 +1,7 @@
 """LangGraph node implementations for meal plan generation."""
 
 import logging
+import time
 import uuid
 from collections import defaultdict
 from datetime import date, timedelta
@@ -309,13 +310,16 @@ def create_generate_draft(session: AsyncSession) -> Callable:
         # Call LLM
         from app.core.config import settings
         llm = ChatOpenAI(
-            model="gpt-4o-mini", 
-            temperature=0.7,
+            model=settings.openai_model,
+            temperature=settings.openai_temperature,
             api_key=settings.openai_api_key,
         )
         
-        logger.info("STATE_TRANSITION: generate_draft - calling LLM")
+        logger.info(f"STATE_TRANSITION: generate_draft - calling LLM (model={settings.openai_model})")
+        t0 = time.perf_counter()
         response = await llm.ainvoke(prompt)
+        elapsed = time.perf_counter() - t0
+        logger.info(f"STATE_TRANSITION: generate_draft - LLM responded in {elapsed:.2f}s")
 
         # Parse response as JSON
         try:
@@ -471,11 +475,15 @@ def create_repair_plan(session: AsyncSession) -> Callable:
         # Call LLM
         from app.core.config import settings
         llm = ChatOpenAI(
-            model="gpt-4o-mini", 
-            temperature=0.3,
+            model=settings.openai_repair_model,
+            temperature=settings.openai_repair_temperature,
             api_key=settings.openai_api_key,
         )
+        logger.info(f"STATE_TRANSITION: repair_plan - calling LLM (model={settings.openai_repair_model})")
+        t0 = time.perf_counter()
         response = await llm.ainvoke(prompt)
+        elapsed = time.perf_counter() - t0
+        logger.info(f"STATE_TRANSITION: repair_plan - LLM responded in {elapsed:.2f}s")
 
         # Parse response as JSON
         try:

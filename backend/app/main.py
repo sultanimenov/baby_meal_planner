@@ -1,8 +1,24 @@
 """FastAPI application entry point."""
 
+import logging
+import sys
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+
+# Configure logging for planner state transitions
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(name)s | %(levelname)s | %(message)s",
+    datefmt="%H:%M:%S",
+    stream=sys.stdout,
+)
+# Ensure planner logs are visible
+logging.getLogger("app.planner").setLevel(logging.INFO)
+# Reduce noise from other libs
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
+logging.getLogger("openai").setLevel(logging.WARNING)
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import auth, logs, plans, profiles

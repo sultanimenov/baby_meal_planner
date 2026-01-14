@@ -41,6 +41,12 @@ class Settings(BaseSettings):
 
     # OpenAI
     openai_api_key: str
+    # Model names used by planner (override via env without code changes)
+    # Examples: "gpt-4o-mini", "gpt-4.1-mini", "gpt-4.1-nano", "o3-mini"
+    openai_model: str = "gpt-5-mini"
+    openai_repair_model: str = "gpt-5-mini"
+    openai_temperature: float = 0.7
+    openai_repair_temperature: float = 0.3
 
     # LangSmith (optional)
     langchain_tracing_v2: bool = False
