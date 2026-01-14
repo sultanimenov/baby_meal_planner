@@ -1,0 +1,458 @@
+[
+  {
+    "title": "Sweet Potato Puree",
+    "description": "Simple, nutritious first food puree",
+    "texture_level": "puree",
+    "ingredients": [
+      {"food_item_id": "sweet-potato", "quantity": 1, "unit": "medium", "prep_notes": "peeled"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Peel and cut sweet potato into chunks"},
+      {"order": 2, "instruction": "Steam or boil until very soft (15-20 minutes)"},
+      {"order": 3, "instruction": "Mash with a fork or blend until smooth"},
+      {"order": 4, "instruction": "Add breast milk, formula, or water to thin if needed"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 20,
+    "servings": 4,
+    "min_age_months": 6,
+    "tags": ["breakfast", "lunch", "dinner"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Ensure sweet potato is cooked until very soft"
+  },
+  {
+    "title": "Avocado Mash",
+    "description": "Creamy, healthy fat-rich first food",
+    "texture_level": "puree",
+    "ingredients": [
+      {"food_item_id": "avocado", "quantity": 0.5, "unit": "ripe", "prep_notes": "peeled and pitted"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Cut avocado in half and remove pit"},
+      {"order": 2, "instruction": "Scoop out flesh"},
+      {"order": 3, "instruction": "Mash with a fork until smooth"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 5,
+    "servings": 2,
+    "min_age_months": 6,
+    "tags": ["breakfast", "snack"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Use ripe avocado for easy mashing"
+  },
+  {
+    "title": "Banana Oatmeal",
+    "description": "Creamy breakfast porridge",
+    "texture_level": "soft_mash",
+    "ingredients": [
+      {"food_item_id": "banana", "quantity": 0.5, "unit": "ripe", "prep_notes": "mashed"},
+      {"food_item_id": "oatmeal", "quantity": 0.25, "unit": "cup", "prep_notes": "cooked"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Cook oatmeal according to package directions"},
+      {"order": 2, "instruction": "Mash banana"},
+      {"order": 3, "instruction": "Mix banana into cooked oatmeal"},
+      {"order": 4, "instruction": "Let cool to appropriate temperature"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 10,
+    "servings": 1,
+    "min_age_months": 6,
+    "tags": ["breakfast"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Ensure oatmeal is cooked until very soft"
+  },
+  {
+    "title": "Scrambled Eggs",
+    "description": "Protein-rich finger food",
+    "texture_level": "finger_food",
+    "ingredients": [
+      {"food_item_id": "egg", "quantity": 1, "unit": "large", "prep_notes": "beaten"},
+      {"food_item_id": "butter", "quantity": 0.5, "unit": "tsp", "prep_notes": "for cooking"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Beat egg in a bowl"},
+      {"order": 2, "instruction": "Heat butter in a non-stick pan over low heat"},
+      {"order": 3, "instruction": "Pour in egg and cook slowly, stirring gently"},
+      {"order": 4, "instruction": "Cook until fully set but still soft"},
+      {"order": 5, "instruction": "Cut into finger-sized strips when cool"}
+    ],
+    "allergen_tags": ["egg", "dairy"],
+    "estimated_prep_minutes": 8,
+    "servings": 1,
+    "min_age_months": 6,
+    "tags": ["breakfast"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Cook eggs thoroughly until no longer runny"
+  },
+  {
+    "title": "Carrot and Sweet Potato Puree",
+    "description": "Colorful vegetable combination",
+    "texture_level": "puree",
+    "ingredients": [
+      {"food_item_id": "carrot", "quantity": 1, "unit": "medium", "prep_notes": "peeled"},
+      {"food_item_id": "sweet-potato", "quantity": 0.5, "unit": "medium", "prep_notes": "peeled"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Peel and cut vegetables into chunks"},
+      {"order": 2, "instruction": "Steam until very soft (20-25 minutes)"},
+      {"order": 3, "instruction": "Blend until smooth"},
+      {"order": 4, "instruction": "Add liquid if needed for desired consistency"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 25,
+    "servings": 4,
+    "min_age_months": 6,
+    "tags": ["lunch", "dinner"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Cook carrots until very soft to reduce choking risk"
+  },
+  {
+    "title": "Chicken and Vegetable Puree",
+    "description": "Protein-rich puree with vegetables",
+    "texture_level": "puree",
+    "ingredients": [
+      {"food_item_id": "chicken", "quantity": 2, "unit": "oz", "prep_notes": "cooked and shredded"},
+      {"food_item_id": "zucchini", "quantity": 0.5, "unit": "small", "prep_notes": "steamed"},
+      {"food_item_id": "carrot", "quantity": 0.5, "unit": "medium", "prep_notes": "steamed"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Cook chicken thoroughly until no pink remains"},
+      {"order": 2, "instruction": "Steam vegetables until very soft"},
+      {"order": 3, "instruction": "Shred chicken finely"},
+      {"order": 4, "instruction": "Blend chicken and vegetables together until smooth"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 25,
+    "servings": 2,
+    "min_age_months": 6,
+    "tags": ["lunch", "dinner"],
+    "cuisine_tags": [],
+    "is_vegetarian": false,
+    "safety_notes": "Ensure chicken is fully cooked and shredded very finely"
+  },
+  {
+    "title": "Broccoli Florets",
+    "description": "Steamed broccoli for baby-led weaning",
+    "texture_level": "finger_food",
+    "ingredients": [
+      {"food_item_id": "broccoli", "quantity": 2, "unit": "florets", "prep_notes": "steamed"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Cut broccoli into small florets"},
+      {"order": 2, "instruction": "Steam until very soft (8-10 minutes)"},
+      {"order": 3, "instruction": "Let cool to appropriate temperature"},
+      {"order": 4, "instruction": "Serve as finger food"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 10,
+    "servings": 1,
+    "min_age_months": 6,
+    "tags": ["lunch", "dinner"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Steam until very soft - should mash easily between fingers"
+  },
+  {
+    "title": "Lentil Puree",
+    "description": "Protein and fiber-rich legume puree",
+    "texture_level": "soft_mash",
+    "ingredients": [
+      {"food_item_id": "lentils", "quantity": 0.25, "unit": "cup", "prep_notes": "cooked"},
+      {"food_item_id": "carrot", "quantity": 0.25, "unit": "medium", "prep_notes": "steamed"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Cook lentils until very soft (20-25 minutes)"},
+      {"order": 2, "instruction": "Steam carrot until soft"},
+      {"order": 3, "instruction": "Blend lentils and carrot together"},
+      {"order": 4, "instruction": "Add cooking liquid if needed"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 25,
+    "servings": 2,
+    "min_age_months": 6,
+    "tags": ["lunch", "dinner"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Cook lentils until very soft and mash well"
+  },
+  {
+    "title": "Salmon and Sweet Potato",
+    "description": "Omega-3 rich fish with sweet potato",
+    "texture_level": "soft_mash",
+    "ingredients": [
+      {"food_item_id": "salmon", "quantity": 2, "unit": "oz", "prep_notes": "cooked and flaked"},
+      {"food_item_id": "sweet-potato", "quantity": 0.5, "unit": "medium", "prep_notes": "steamed"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Cook salmon thoroughly, checking for bones"},
+      {"order": 2, "instruction": "Steam sweet potato until soft"},
+      {"order": 3, "instruction": "Flake salmon and remove any bones"},
+      {"order": 4, "instruction": "Mash sweet potato and mix with salmon"}
+    ],
+    "allergen_tags": ["fish"],
+    "estimated_prep_minutes": 20,
+    "servings": 2,
+    "min_age_months": 6,
+    "tags": ["lunch", "dinner"],
+    "cuisine_tags": [],
+    "is_vegetarian": false,
+    "safety_notes": "Carefully check for and remove all bones from salmon"
+  },
+  {
+    "title": "Apple Puree",
+    "description": "Classic fruit puree",
+    "texture_level": "puree",
+    "ingredients": [
+      {"food_item_id": "apple", "quantity": 1, "unit": "medium", "prep_notes": "peeled and cored"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Peel, core, and cut apple into chunks"},
+      {"order": 2, "instruction": "Steam or cook until soft (10-15 minutes)"},
+      {"order": 3, "instruction": "Blend until smooth"},
+      {"order": 4, "instruction": "Let cool before serving"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 15,
+    "servings": 2,
+    "min_age_months": 6,
+    "tags": ["breakfast", "snack"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Cook apples until very soft - raw apples are a choking hazard"
+  },
+  {
+    "title": "Pear Slices",
+    "description": "Soft finger food",
+    "texture_level": "finger_food",
+    "ingredients": [
+      {"food_item_id": "pear", "quantity": 0.5, "unit": "ripe", "prep_notes": "peeled"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Peel ripe pear"},
+      {"order": 2, "instruction": "Cut into finger-sized slices"},
+      {"order": 3, "instruction": "Serve as finger food"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 5,
+    "servings": 1,
+    "min_age_months": 6,
+    "tags": ["snack"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Use very ripe, soft pears"
+  },
+  {
+    "title": "Spinach and Zucchini Puree",
+    "description": "Iron-rich green vegetable puree",
+    "texture_level": "puree",
+    "ingredients": [
+      {"food_item_id": "spinach", "quantity": 0.5, "unit": "cup", "prep_notes": "cooked"},
+      {"food_item_id": "zucchini", "quantity": 0.5, "unit": "small", "prep_notes": "steamed"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Steam zucchini until soft"},
+      {"order": 2, "instruction": "Cook spinach until wilted"},
+      {"order": 3, "instruction": "Blend together until smooth"},
+      {"order": 4, "instruction": "Strain if needed to remove any stringy bits"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 12,
+    "servings": 2,
+    "min_age_months": 6,
+    "tags": ["lunch", "dinner"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Cook spinach thoroughly"
+  },
+  {
+    "title": "Turkey Meatballs",
+    "description": "Soft protein finger food",
+    "texture_level": "finger_food",
+    "ingredients": [
+      {"food_item_id": "turkey", "quantity": 3, "unit": "oz", "prep_notes": "ground"},
+      {"food_item_id": "sweet-potato", "quantity": 0.25, "unit": "medium", "prep_notes": "mashed"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Cook and mash sweet potato"},
+      {"order": 2, "instruction": "Mix ground turkey with mashed sweet potato"},
+      {"order": 3, "instruction": "Form into small meatballs"},
+      {"order": 4, "instruction": "Bake at 375°F until fully cooked (15-20 minutes)"},
+      {"order": 5, "instruction": "Let cool and serve"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 25,
+    "servings": 4,
+    "min_age_months": 8,
+    "tags": ["lunch", "dinner"],
+    "cuisine_tags": [],
+    "is_vegetarian": false,
+    "safety_notes": "Ensure turkey is fully cooked - internal temperature 165°F"
+  },
+  {
+    "title": "Quinoa and Vegetable Bowl",
+    "description": "Complete protein grain bowl",
+    "texture_level": "soft_mash",
+    "ingredients": [
+      {"food_item_id": "quinoa", "quantity": 0.25, "unit": "cup", "prep_notes": "cooked"},
+      {"food_item_id": "peas", "quantity": 2, "unit": "tbsp", "prep_notes": "steamed and mashed"},
+      {"food_item_id": "carrot", "quantity": 0.25, "unit": "medium", "prep_notes": "steamed"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Cook quinoa until very soft"},
+      {"order": 2, "instruction": "Steam vegetables until soft"},
+      {"order": 3, "instruction": "Mash peas and carrot"},
+      {"order": 4, "instruction": "Mix quinoa with mashed vegetables"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 20,
+    "servings": 2,
+    "min_age_months": 6,
+    "tags": ["lunch", "dinner"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Cook quinoa until very soft, mash peas well"
+  },
+  {
+    "title": "Yogurt with Fruit",
+    "description": "Probiotic-rich breakfast or snack",
+    "texture_level": "soft_mash",
+    "ingredients": [
+      {"food_item_id": "yogurt", "quantity": 0.25, "unit": "cup", "prep_notes": "plain, full-fat"},
+      {"food_item_id": "banana", "quantity": 0.25, "unit": "ripe", "prep_notes": "mashed"},
+      {"food_item_id": "strawberries", "quantity": 2, "unit": "small", "prep_notes": "mashed"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Mash banana and strawberries"},
+      {"order": 2, "instruction": "Mix with plain yogurt"},
+      {"order": 3, "instruction": "Serve immediately"}
+    ],
+    "allergen_tags": ["dairy"],
+    "estimated_prep_minutes": 5,
+    "servings": 1,
+    "min_age_months": 6,
+    "tags": ["breakfast", "snack"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Use plain, full-fat yogurt without added sugar"
+  },
+  {
+    "title": "Butternut Squash Puree",
+    "description": "Sweet, creamy winter squash",
+    "texture_level": "puree",
+    "ingredients": [
+      {"food_item_id": "butternut-squash", "quantity": 0.5, "unit": "small", "prep_notes": "peeled and seeded"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Peel, seed, and cut squash into chunks"},
+      {"order": 2, "instruction": "Roast or steam until very soft (25-30 minutes)"},
+      {"order": 3, "instruction": "Blend until smooth"},
+      {"order": 4, "instruction": "Add liquid if needed"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 30,
+    "servings": 4,
+    "min_age_months": 6,
+    "tags": ["lunch", "dinner"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Cook until very soft"
+  },
+  {
+    "title": "Peanut Butter Toast Strips",
+    "description": "Allergen introduction finger food",
+    "texture_level": "finger_food",
+    "ingredients": [
+      {"food_item_id": "whole-wheat-bread", "quantity": 1, "unit": "slice", "prep_notes": "toasted"},
+      {"food_item_id": "peanut-butter", "quantity": 1, "unit": "tsp", "prep_notes": "thin layer"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Toast bread until golden"},
+      {"order": 2, "instruction": "Spread very thin layer of peanut butter"},
+      {"order": 3, "instruction": "Cut into finger-sized strips"},
+      {"order": 4, "instruction": "Let cool before serving"}
+    ],
+    "allergen_tags": ["peanut", "wheat"],
+    "estimated_prep_minutes": 5,
+    "servings": 1,
+    "min_age_months": 6,
+    "tags": ["breakfast", "snack"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Use very thin layer of peanut butter - never globs. Remove crusts."
+  },
+  {
+    "title": "Mango Chunks",
+    "description": "Tropical fruit finger food",
+    "texture_level": "finger_food",
+    "ingredients": [
+      {"food_item_id": "mango", "quantity": 0.5, "unit": "ripe", "prep_notes": "peeled"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Peel ripe mango"},
+      {"order": 2, "instruction": "Cut into soft chunks"},
+      {"order": 3, "instruction": "Serve as finger food"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 5,
+    "servings": 1,
+    "min_age_months": 6,
+    "tags": ["snack"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Use very ripe, soft mango"
+  },
+  {
+    "title": "Cauliflower and Cheese",
+    "description": "Vegetable with dairy introduction",
+    "texture_level": "soft_mash",
+    "ingredients": [
+      {"food_item_id": "cauliflower", "quantity": 2, "unit": "florets", "prep_notes": "steamed"},
+      {"food_item_id": "cheese", "quantity": 1, "unit": "tbsp", "prep_notes": "shredded"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Steam cauliflower until very soft"},
+      {"order": 2, "instruction": "Mash cauliflower"},
+      {"order": 3, "instruction": "Mix in shredded cheese while warm"},
+      {"order": 4, "instruction": "Let cool to appropriate temperature"}
+    ],
+    "allergen_tags": ["dairy"],
+    "estimated_prep_minutes": 12,
+    "servings": 1,
+    "min_age_months": 8,
+    "tags": ["lunch", "dinner"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Steam until very soft, use finely shredded cheese"
+  },
+  {
+    "title": "Blueberry Oatmeal",
+    "description": "Antioxidant-rich breakfast",
+    "texture_level": "soft_mash",
+    "ingredients": [
+      {"food_item_id": "oatmeal", "quantity": 0.25, "unit": "cup", "prep_notes": "cooked"},
+      {"food_item_id": "blueberries", "quantity": 5, "unit": "small", "prep_notes": "mashed"}
+    ],
+    "steps": [
+      {"order": 1, "instruction": "Cook oatmeal until very soft"},
+      {"order": 2, "instruction": "Mash blueberries"},
+      {"order": 3, "instruction": "Mix blueberries into oatmeal"},
+      {"order": 4, "instruction": "Let cool before serving"}
+    ],
+    "allergen_tags": [],
+    "estimated_prep_minutes": 10,
+    "servings": 1,
+    "min_age_months": 6,
+    "tags": ["breakfast"],
+    "cuisine_tags": [],
+    "is_vegetarian": true,
+    "safety_notes": "Mash blueberries well to reduce choking risk"
+  }
+]
+
+

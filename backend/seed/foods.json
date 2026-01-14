@@ -1,0 +1,466 @@
+[
+  {
+    "name": "Sweet Potato",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cook until soft, mash or cut into finger-sized pieces",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Avocado",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Mash or cut into slices",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Banana",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Mash or cut into finger-sized pieces",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Carrot",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cook until very soft, cut lengthwise into strips",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Broccoli",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Steam until soft, cut into small florets",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Apple",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cook until soft and mash, or cut into thin slices",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Pear",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cook until soft and mash, or cut into slices",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Peas",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Mash well or flatten individual peas",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Spinach",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cook and puree",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Zucchini",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cook until soft, mash or cut into strips",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Chicken",
+    "category": "protein",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cook thoroughly, shred finely or puree",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Turkey",
+    "category": "protein",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cook thoroughly, shred finely or puree",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Salmon",
+    "category": "protein",
+    "allergen_tags": ["fish"],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cook thoroughly, flake and check for bones",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Egg",
+    "category": "protein",
+    "allergen_tags": ["egg"],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cook thoroughly (scrambled, hard-boiled)",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Lentils",
+    "category": "protein",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cook until very soft and mash",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Black Beans",
+    "category": "protein",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Mash well or flatten individual beans",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Tofu",
+    "category": "protein",
+    "allergen_tags": ["soy"],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cut into soft cubes or mash",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Oatmeal",
+    "category": "grain",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cook until very soft",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Rice",
+    "category": "grain",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cook until very soft, consider rice cereal",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Quinoa",
+    "category": "grain",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cook until very soft",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Whole Wheat Bread",
+    "category": "grain",
+    "allergen_tags": ["wheat"],
+    "texture_suitability": {"puree": false, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Toast and cut into strips, remove crusts",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Yogurt",
+    "category": "dairy",
+    "allergen_tags": ["dairy"],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Use plain, full-fat yogurt",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Cheese",
+    "category": "dairy",
+    "allergen_tags": ["dairy"],
+    "texture_suitability": {"puree": false, "blw": true, "mixed": true},
+    "min_age_months": 8,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Shred finely or cut into thin slices",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Milk",
+    "category": "dairy",
+    "allergen_tags": ["dairy"],
+    "texture_suitability": {"puree": false, "blw": false, "mixed": false},
+    "min_age_months": 12,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Not recommended as main drink until 12 months",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Honey",
+    "category": "other",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": false, "blw": false, "mixed": false},
+    "min_age_months": 12,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Never give to babies under 12 months - risk of botulism",
+    "is_blocked_under_12m": true,
+    "blocked_reason": "CDC: Risk of infant botulism"
+  },
+  {
+    "name": "Peanut Butter",
+    "category": "protein",
+    "allergen_tags": ["peanut"],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Thin layer on toast or mix into purees - never give globs",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Almond Butter",
+    "category": "protein",
+    "allergen_tags": ["tree_nut"],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Thin layer on toast or mix into purees - never give globs",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Whole Nuts",
+    "category": "protein",
+    "allergen_tags": ["tree_nut", "peanut"],
+    "texture_suitability": {"puree": false, "blw": false, "mixed": false},
+    "min_age_months": 48,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Never give whole nuts to children under 4 years",
+    "is_blocked_under_12m": true,
+    "blocked_reason": "Choking hazard - whole nuts not safe"
+  },
+  {
+    "name": "Grapes",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cut lengthwise into quarters, never whole",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Cherry Tomatoes",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cut into quarters or halves, remove seeds",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Blueberries",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cut in half or flatten",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Strawberries",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cut into small pieces or mash",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Mango",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cut into soft pieces or mash",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Cucumber",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": false, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cut into thin strips, peel if needed",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Cauliflower",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Steam until soft, cut into small florets",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Butternut Squash",
+    "category": "produce",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cook until soft, mash or cut into strips",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Beef",
+    "category": "protein",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cook thoroughly, shred finely or puree",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Pork",
+    "category": "protein",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cook thoroughly, shred finely or puree",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Tuna",
+    "category": "protein",
+    "allergen_tags": ["fish"],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Cook thoroughly, flake and check for bones",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Chickpeas",
+    "category": "protein",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Mash well or flatten individual chickpeas",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Pasta",
+    "category": "grain",
+    "allergen_tags": ["wheat"],
+    "texture_suitability": {"puree": true, "blw": true, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cook until very soft, cut into small pieces",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Barley",
+    "category": "grain",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Cook until very soft",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Cottage Cheese",
+    "category": "dairy",
+    "allergen_tags": ["dairy"],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 8,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Use full-fat, low-sodium if possible",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Coconut",
+    "category": "other",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": true,
+    "safe_form_notes": "Use shredded coconut, not large pieces",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Olive Oil",
+    "category": "other",
+    "allergen_tags": [],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Use in small amounts for cooking",
+    "is_blocked_under_12m": false
+  },
+  {
+    "name": "Butter",
+    "category": "dairy",
+    "allergen_tags": ["dairy"],
+    "texture_suitability": {"puree": true, "blw": false, "mixed": true},
+    "min_age_months": 6,
+    "is_choking_hazard": false,
+    "safe_form_notes": "Use in small amounts for cooking",
+    "is_blocked_under_12m": false
+  }
+]
+
+
